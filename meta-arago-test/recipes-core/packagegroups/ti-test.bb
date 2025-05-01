@@ -41,6 +41,7 @@ TI_TEST_BASE = "\
     nbench-byte \
     netperf \
     openntpd \
+    optee-test \
     pcitest \
     perf \
     powertop \
@@ -53,6 +54,7 @@ TI_TEST_BASE = "\
     stream \
     stress \
     stress-ng \
+    strongswan \
     tcpdump \
     v4l-utils \
     yavta \
