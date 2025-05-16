@@ -1,8 +1,7 @@
 SUMMARY = "Matter IoT connectivity on TI boards"
 DESCRIPTION = "This recipe primes the matter environment"
 LICENSE = "Apache-2.0"
-LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/
-Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
+LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 BRANCH = "master"
 SRC_URI = "gitsm://github.com/project-chip/connectedhomeip.git;protocol=https;branch=$
