@@ -7,13 +7,12 @@ LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7ca
 PACKAGES = "${PN}"
 
 PV = "v2023.08.04-nightly"
-SRC_URI = "https://github.com/project-chip/zap/releases/download/${PV}/zap-linuxx64.zip;unpack=yes"
+SRC_URI = "https://github.com/project-chip/zap/releases/download/${PV}/zap-linux-x64.zip;unpack=yes"
 SRC_URI[sha256sum] = "b254a0c066ef6b1fe7c2bdd1ab5b137ca80413f0952dfe6e64f4b0fdc4479b55"
 
 S = "${WORKDIR}"
 
 #INSANE_SKIP:${PN} = " already-stripped arch file-rdeps "
-
 BBCLASSEXTEND = "native"
 INHIBIT_PACKAGE_STRIP = "1"
 INHIBIT_SYSROOT_STRIP = "1"
@@ -39,11 +38,11 @@ EXCLUDE_FROM_SHLIBS = "1"
 
 # This is a workaround to bypass the issue that zap-cli modified by build system
 do_deploy() {
-    chmod 755 ${D}${bindir}/zap-cli
+chmod 755 ${D}${bindir}/zap-cli
 }
 
 do_populate_sdk:append() {
-    chmod 755 ${D}${bindir}/zap-cli
+chmod 755 ${D}${bindir}/zap-cli
 }
 
 addtask deploy after do_install do_populate_sysroot

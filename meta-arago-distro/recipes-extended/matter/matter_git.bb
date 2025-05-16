@@ -4,8 +4,7 @@ LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
 BRANCH = "master"
-SRC_URI = "gitsm://github.com/project-chip/connectedhomeip.git;protocol=https;branch=$
-{BRANCH};lfs=1"
+SRC_URI = "gitsm://github.com/project-chip/connectedhomeip.git;protocol=https;branch=${BRANCH};lfs=1"
 
 SRCREV = "a98bc64856aa161197e7dc7c1ffbdcc43323eda3"
 
@@ -13,8 +12,7 @@ do_matter_bootstrap[network] = "1"
 do_compile[network] = "1"
 
 TARGET_CC_ARCH += "${LDFLAGS}"
-DEPENDS += " glib-2.0 gn-native ninja-native avahi dbus-glib-native pkgconfig-native python3-
-native boost zap-native openssl-native ca-certificates-native clang-native"
+DEPENDS += " glib-2.0 gn-native ninja-native avahi dbus-glib-native pkgconfig-native python3-native boost zap-native openssl-native ca-certificates-native clang-native"
 RDEPENDS_${PN} += " libavahi-client openssl "
 FILES:${PN} += "usr/share"
 INSANE_SKIP:${PN} += "dev-so debug-deps strip"
@@ -95,7 +93,7 @@ do_configure() {
 
     cd ${S}/examples/thermostat/linux
     common_configure
-    
+
     cd ${S}/examples/lighting-app/linux
     common_configure
 }
