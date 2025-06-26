@@ -3,10 +3,11 @@ DESCRIPTION = "This recipe primes the matter environment"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-BRANCH = "v1.4-branch"
+BRANCH = "v1.3-branch"
 SRC_URI = "gitsm://github.com/project-chip/connectedhomeip.git;protocol=https;branch=${BRANCH};lfs=1"
 
-SRCREV = "ba6168ccd9f485f6d41a395b65c294ada203b9ea"
+SRCREV = "5524d5b5713efbb39273f56067a3845a08ce826d"
+
 
 do_matter_bootstrap[network] = "1"
 do_compile[network] = "1"
@@ -15,15 +16,19 @@ TARGET_CC_ARCH += "${LDFLAGS}"
 DEPENDS += " glib-2.0 gn-native ninja-native avahi dbus-glib-native pkgconfig-native python3-native boost zap-native openssl-native ca-certificates-native clang-native"
 RDEPENDS_${PN} += " libavahi-client openssl "
 FILES:${PN} += "usr/share"
+
 INSANE_SKIP:${PN} += "dev-so debug-deps strip"
 
 PACKAGECONFIG ?= ""
 PACKAGECONFIG[debug] = "is_debug=true,is_debug=false"
 
+inherit pkgconfig
+
 GN_TARGET_ARCH_NAME:aarch64 = "arm64"
 GN_TARGET_ARCH_NAME:arm = "arm"
 GN_TARGET_ARCH_NAME:x86 = "x86"
 GN_TARGET_ARCH_NAME:x86-64 = "x64"
+
 
 def gn_target_arch_name(d):
     """Returns a GN architecture name corresponding to the target machine's
@@ -31,7 +36,7 @@ def gn_target_arch_name(d):
     name = d.getVar("GN_TARGET_ARCH_NAME")
     if name is None:
         bb.fatal('Unsupported target architecture. A valid override for the '
-            'GN_TARGET_ARCH_NAME variable could not be found.')
+                 'GN_TARGET_ARCH_NAME variable could not be found.')
     return name
 
 # this variable must use spaces and double quotes for parameter strings because
@@ -78,52 +83,53 @@ export ftp_proxy
 export no_proxy
 
 do_matter_bootstrap() {
-    . ${S}/scripts/bootstrap.sh
+	cd "${S}"
+	. ${S}/scripts/bootstrap.sh
 }
 
 do_configure() {
-    . scripts/activate.sh
-    pip install click
+	. scripts/activate.sh
+	pip install click
 
-    cd ${S}/examples/chip-tool
-    common_configure
+	cd ${S}/examples/chip-tool
+	common_configure
 
-    cd ${S}/examples/lock-app/linux
-    common_configure
+	cd ${S}/examples/lock-app/linux
+	common_configure
 
-    cd ${S}/examples/thermostat/linux
-    common_configure
+	cd ${S}/examples/thermostat/linux
+	common_configure
 
-    cd ${S}/examples/lighting-app/linux
-    common_configure
+	cd ${S}/examples/lighting-app/linux
+	common_configure
 }
 
 do_compile() {
-    . scripts/activate.sh
+	. scripts/activate.sh
 
-    cd ${S}/examples/chip-tool
-    ninja -C out/
+	cd ${S}/examples/chip-tool
+	ninja -C out/
 
-    cd ${S}/examples/lock-app/linux
-    ninja -C out/
+	cd ${S}/examples/lock-app/linux
+	ninja -C out/
 
-    cd ${S}/examples/thermostat/linux
-    ninja -C out/
+	cd ${S}/examples/thermostat/linux
+	ninja -C out/
 
-    cd ${S}/examples/lighting-app/linux
-    ninja -C out/
+	cd ${S}/examples/lighting-app/linux
+	ninja -C out/
 }
 
 do_install() {
-    install -d -m 755 ${D}${bindir}
+	install -d -m 755 ${D}${bindir}
 
-    # Install chip-tool
-    install ${S}/examples/chip-tool/out/chip-tool ${D}${bindir}
+	# Install chip-tool
+	install ${S}/examples/chip-tool/out/chip-tool ${D}${bindir}
 
-    # lock-app
-    install ${S}/examples/lock-app/linux/out/chip-lock-app ${D}${bindir}
-    install ${S}/examples/thermostat/linux/out/thermostat-app ${D}${bindir}
-    install ${S}/examples/lighting-app/linux/out/chip-lighting-app ${D}${bindir}
+	# lock-app
+	install ${S}/examples/lock-app/linux/out/chip-lock-app ${D}${bindir}
+	install ${S}/examples/thermostat/linux/out/thermostat-app ${D}${bindir}
+	install ${S}/examples/lighting-app/linux/out/chip-lighting-app ${D}${bindir}
 }
 
 addtask matter_bootstrap after do_unpack before do_configure
