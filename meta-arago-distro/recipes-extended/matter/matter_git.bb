@@ -3,10 +3,10 @@ DESCRIPTION = "This recipe primes the matter environment"
 LICENSE = "Apache-2.0"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/Apache-2.0;md5=89aea4e17d99a7cacdbeed46a0096b10"
 
-BRANCH = "v1.3-branch"
+BRANCH = "v1.4-branch"
 SRC_URI = "gitsm://github.com/project-chip/connectedhomeip.git;protocol=https;branch=${BRANCH};lfs=1"
 
-SRCREV = "5524d5b5713efbb39273f56067a3845a08ce826d"
+SRCREV = "47ce873180594df123091f45e144fad2d476a395"
 
 
 do_matter_bootstrap[network] = "1"
